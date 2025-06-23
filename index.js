@@ -14,6 +14,14 @@ const escapeNewline = (string) => {
     try {
         const apiEndpoint = core.getInput('api-endpoint');
         const yamlFile = core.getInput('yaml-file');
+        const basicAuthUser = core.getInput('basic-auth-user');
+        const basicAuthPassword = core.getInput('basic-auth-password');
+
+        var headers = { "Content-Type": "application/json" };
+        if (basicAuthUser && basicAuthPassword) {
+            encodedCreds = Buffer.from(`${basicAuthUser}:${basicAuthPassword}`).toString('base64');
+            headers = { ...headers, "Authorization": `Basic ${encodedCreds}`};
+        }
         
         const convertedFile = yaml.load(fs.readFileSync(yamlFile, 'utf8'));
         console.log('YAML converted to JSON:');
@@ -22,7 +30,7 @@ const escapeNewline = (string) => {
         const response = await fetch(apiEndpoint, {
             method: "post",
             body: JSON.stringify(convertedFile),
-            headers: { "Content-Type": "application/json" },
+            headers: headers,
         }).catch(error => { throw new Error(`Invalid request to server: ${error.message}`) });
         
         if (!response.ok) {

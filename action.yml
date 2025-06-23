@@ -1,4 +1,4 @@
-name: 'Remote YAML file validation'
+name: 'Remote YAML file validation with auth'
 description: 'Validates a YAML file by converting it to JSON and sending it to a remote HTTP API endpoint.'
 branding:
   icon: 'arrow-down-circle'  
@@ -10,6 +10,12 @@ inputs:
   yaml-file:
     description: 'The name of the YAML file to validate.'
     required: true
+  basic-auth-user:
+    description: 'Basic authentication user'
+    required: false
+  basic-auth-password:
+    description: 'Basic authentication password'
+    required: false
 runs:
   using: 'node12'
   main: 'dist/index.js'

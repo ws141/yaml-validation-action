@@ -1,4 +1,4 @@
-# Remote YAML file validation
+# Remote YAML file validation with auth
 
 Validates a YAML file by converting it to JSON and sending it to a remote HTTP API endpoint via a POST request.
 
@@ -30,12 +30,22 @@ If `isValid` is `true`, then `errors` should be an empty array.
 
 **Required** The name of the YAML file to validate.
 
+### `basic-auth-user`
+
+The user name for basic authenticaton. Requires password to be set.
+
+### `basic-auth-password`
+
+The password for basic authenticaton. Requires user name to be set. 
+
 ## Example usage
 
 ```yaml
 - name: Remote YAML file validation
-  uses: mpoc/yaml-validation-action@v1.6
+  uses: ws141/yaml-validation-action@v1.6
   with:
     api-endpoint: 'http://example.com/validate'
     yaml-file: assignment.yml
+    basic-auth-user: 'user'
+    basic-auth-password: 'password'
 ```
